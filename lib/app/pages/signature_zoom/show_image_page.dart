@@ -10,6 +10,7 @@ class ShowImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffEBEBEB),
       appBar: AppBar(
         title: const Text('Show Image'),
       ),

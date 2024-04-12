@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lindi_sticker_widget/lindi_controller.dart';
 import 'package:lindi_sticker_widget/lindi_sticker_widget.dart';
-import 'package:signature_app/app/pages/show_image_page.dart';
+import 'package:signature_app/app/pages/signature_zoom/show_image_page.dart';
 
 class DocumentPage extends StatefulWidget {
   final Uint8List signatureBytes;
@@ -66,11 +66,7 @@ class _DocumentPageState extends State<DocumentPage> {
           key: _globalKey,
           child: LindiStickerWidget(
             controller: _lindiController,
-            child: SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Image.file(widget.imageFile),
-            ),
+            child: Image.file(widget.imageFile),
           ),
         ),
       ),
@@ -79,17 +75,12 @@ class _DocumentPageState extends State<DocumentPage> {
 
   Future<void> _savePng() async {
     try {
-      RenderRepaintBoundary boundary = _globalKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      final RenderRepaintBoundary boundary = _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      final Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ShowImagePage(pngBytes: pngBytes)));
+      if (mounted) Navigator.push(context, MaterialPageRoute(builder: (context) => ShowImagePage(pngBytes: pngBytes)));
     } catch (e) {
       debugPrint(e.toString());
     }

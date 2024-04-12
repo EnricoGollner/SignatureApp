@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:signature_app/app/pages/signature_pad_page.dart';
+import 'package:get/get.dart';
+import 'package:signature_app/app/core/utils/app_routes.dart';
+import 'package:sizer/sizer.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,9 +12,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignaturePadPage(),
+    return Sizer(
+      builder: (_, __, ___) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          getPages: AppPages.pages,
+          initialRoute: PagesRoutes.signatureZooming,
+        );
+      },
     );
   }
 }

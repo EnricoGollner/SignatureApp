@@ -2,10 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:signature/signature.dart';
-import 'package:signature_app/app/pages/document_page.dart';
+import 'package:signature_app/app/components/custom_drawer.dart';
+import 'package:signature_app/app/core/utils/app_routes.dart';
+import 'package:signature_app/app/pages/signature_pad/document_page.dart';
 
 class SignaturePadPage extends StatefulWidget {
   const SignaturePadPage({super.key});
@@ -36,6 +39,11 @@ class _SignaturePadPageState extends State<SignaturePadPage> {
       appBar: AppBar(
         title: const Text('Signature Pad'),
         centerTitle: true,
+      ),
+      drawer: CustomDrawer(
+        selectedItemIndex: 1,
+        signatureZoomingOnTap: () => Get.offNamed(PagesRoutes.signatureZooming),
+        signatureWithPadOnTap: () => Get.back(),
       ),
       body: SingleChildScrollView(
         child: Column(
